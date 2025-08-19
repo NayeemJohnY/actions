@@ -1,0 +1,22 @@
+name: Deploy Github pages
+description: "Publish to Github Pages"
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Setup Github Pages
+      if: success() || failure()
+      uses: actions/configure-pages@v5
+
+    - name: Upload Github Pages
+      if: success() || failure()
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: "github-pages/"
+        retention-days: 3
+
+    - name: Publish Github Pages
+      if: success() || failure()
+      id: publish
+      uses: actions/deploy-pages@v4
