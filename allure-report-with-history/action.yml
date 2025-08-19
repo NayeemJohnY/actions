@@ -16,15 +16,15 @@ runs:
       - name: Checkout GitHub Pages
         uses: actions/checkout@v3
         with:
-          ref: gh-pages
-          path: gh-pages
+          ref: github-pages
+          path: github-pages
     
       - name: Generate Allure Report
         if: success() || failure()
         shell: bash
         run: |
-          if [ -d gh-pages/allure-report/history ]; then
-            cp -r gh-pages/allure-report/history test-results/allure-results/history
+          if [ -d github-pages/allure-report/history ]; then
+            cp -r github-pages/allure-report/history test-results/allure-results/history
             echo "Allure history copied from GitHub Pages."
           fi
 
