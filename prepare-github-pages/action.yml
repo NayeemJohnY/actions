@@ -1,0 +1,32 @@
+name: prepare-github-pages
+description: Copies Allure reports and optionally Javadoc to the GitHub Pages directory for deployment
+
+inputs:
+  reports-dir:
+    description: Path to the Allure report directory
+    required: true
+
+  javadoc-dir:
+    description: Optional path to the Javadoc output
+    required: false
+
+  output-dir:
+    description: Path where GitHub Pages expects files (e.g., ./site)
+    required: false
+    default: github-pages
+
+runs:
+  using: "composite"
+  steps:
+    - name: Ensure output directory exists
+      run: mkdir -p "${{ inputs.output-dir }}"
+      shell: bash
+
+    - name: Copy Allure report
+      run: cp -r "${{ inputs.reports-dir }}"/* "${{ inputs.output-dir }}/allure-report"
+      shell: bash
+
+    - name: Copy Javadocs
+      if: inputs.javadoc-dir != ''
+      run: cp -r "${{ inputs.javadoc-dir }}"/* "${{ inputs.output-dir }}/javadocs"
+      shell: bash
