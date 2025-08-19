@@ -1,11 +1,17 @@
 name: Generate Allure Report with History
 description: Generate Allure report by keeping history of previous runs
 
+inputs:
+  github-token:
+    description: "GitHub Token for authentication"
+    required: true
+    
 runs:
   using: "composite"
   steps:
       - name: Install Allure CLI
         if: success() || failure()
+        shell: bash
         run: |
           curl -o allure-2.27.0.tgz -L https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz
           tar -xzf allure-2.27.0.tgz
@@ -40,13 +46,14 @@ runs:
         uses: actions/download-artifact@v4
         with:
           name: test-results
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ inputs.github-token }}
           path: test-results-prev-run
           run-id: ${{ steps.get-run-id.outputs.run_id }}
         continue-on-error: true
 
       - name: Generate Allure Report
         if: success() || failure()
+        shell: bash
         run: |
           if [ -d test-results-prev-run/allure-report/history ]; then
             cp -r test-results-prev-run/allure-report/history test-results/allure-results/history
