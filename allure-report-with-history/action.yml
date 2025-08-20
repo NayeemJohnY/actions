@@ -38,6 +38,7 @@ runs:
           done
 
       - name: Debug Allure History
+        shell: bash
         run: |
           echo "Checking contents of history folder:"
           ls -l test-results/allure-results/history || echo "No history folder found"
