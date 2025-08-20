@@ -37,6 +37,18 @@ runs:
               -o "test-results/allure-results/history/$file" || echo "$file not found"
           done
 
+      - name: Debug Allure History
+        run: |
+          echo "Checking contents of history folder:"
+          ls -l test-results/allure-results/history || echo "No history folder found"
+      
+          echo -e "\nContents of history.json (if present):"
+          if [ -f test-results/allure-results/history/history.json ]; then
+            cat test-results/allure-results/history/history.json
+          else
+            echo "history.json not found"
+          fi
+          
       - name: Generate Allure Report
         if: success() || failure()
         shell: bash
