@@ -23,10 +23,10 @@ runs:
       shell: bash
 
     - name: Copy Allure report
-      run: cp -r "${{ inputs.reports-dir }}"/* "${{ inputs.output-dir }}/allure-report"
+      run: cp -r "${{ inputs.reports-dir }}" "${{ inputs.output-dir }}/allure-report"
       shell: bash
 
     - name: Copy Javadocs
       if: inputs.javadoc-dir != ''
-      run: cp -r "${{ inputs.javadoc-dir }}"/* "${{ inputs.output-dir }}/javadocs"
+      run: cp -r "${{ inputs.javadoc-dir }}" "${{ inputs.output-dir }}/javadocs"
       shell: bash
