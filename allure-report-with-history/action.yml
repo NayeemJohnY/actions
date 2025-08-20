@@ -9,6 +9,14 @@ inputs:
 runs:
   using: "composite"
   steps:
+
+      - name: Set up Java if JAVA_HOME is not set
+        if: ${{ !env.JAVA_HOME }}
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
       - name: Install Allure CLI
         if: success() || failure()
         shell: bash
