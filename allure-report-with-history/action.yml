@@ -37,7 +37,8 @@ runs:
               -o "test-results/allure-results/history/$file" || echo "$file not found"
           done
 
-      - name: Debug Allure History
+      - name: Generate Allure Report
+        if: success() || failure()
         shell: bash
         run: |
           echo "Checking contents of history folder:"
@@ -50,8 +51,4 @@ runs:
             echo "history.json not found"
           fi
           
-      - name: Generate Allure Report
-        if: success() || failure()
-        shell: bash
-        run: |
           allure generate test-results/allure-results --clean -o test-results/allure-report
