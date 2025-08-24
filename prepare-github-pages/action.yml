@@ -30,3 +30,13 @@ runs:
       if: inputs.javadoc-dir != ''
       run: cp -r "${{ inputs.javadoc-dir }}" "${{ inputs.output-dir }}/javadocs"
       shell: bash
+
+    - name: Copy Test Results JSON
+      shell: bash
+      run: |
+        if [ -f test-results/test-results-report.json ]; then
+          echo "File exists. Copying..."
+          cp test-results/test-results-report.json "${{ inputs.output-dir }}/test-results-report.json"
+        else
+          echo "File not found. Skipping..."
+        fi
