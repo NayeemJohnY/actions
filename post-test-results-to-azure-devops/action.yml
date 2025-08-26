@@ -36,9 +36,10 @@ runs:
     - name: Find all action paths
       shell: bash
       run: |
-        echo pwd
+        echo "Current Directory"
+        pwd
         echo "Searching /home/runner/work/_actions for actual action folders..."
-        find /home/runner/work/_actions -type d
+        ls -R /home/runner/
     
     - name: Install dependencies
       run: pip install -r ${{ github.action_path }}/requirements.txt
