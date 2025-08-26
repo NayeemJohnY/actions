@@ -160,7 +160,7 @@ def main(args):
         ado_client.complete_test_run(run_id)
 
     except FileNotFoundError:
-        logger.error("Test results file not found: %s", args.result_json)
+        logger.error("Test results file not found: %s", args.test_result_json)
         raise
     except KeyError as e:
         logger.error("Missing required field in test results JSON: %s", e)
