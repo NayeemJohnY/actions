@@ -34,12 +34,14 @@ runs:
         fi
     
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: |
+      ls -R ./actions
+      pip install -r ./actions/post-test-results-to-azure-devops/requirements.txt
       shell: bash
     
     - name: Run Script
       run: |
-        python post_results.py \
+        python ./actions/post-test-results-to-azure-devops/post_results.py \
           --token "${{ inputs.azure-token }}" \
           --org-url "${{ inputs.org-url }}" \
           --project "${{ inputs.project }}" \
