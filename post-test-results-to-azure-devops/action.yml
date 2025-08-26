@@ -36,7 +36,6 @@ runs:
     - name: Install dependencies
       shell: bash
       run: |
-        ls -R ./actions
         pip install -r ./actions/post-test-results-to-azure-devops/requirements.txt
     
     - name: Run Script
