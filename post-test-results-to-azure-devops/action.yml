@@ -1,0 +1,40 @@
+name: Post Test Results to Azure DevOps
+description: "Post Test Results to Azure DevOps Test Plan"
+
+inputs:
+  test-results-json:
+    description: Path to Test Results JSON
+    required: true
+
+  azure-token:
+    required: true
+    description: 'Azure DevOps PAT Token'
+  
+  org-url:
+    required: true
+    description: 'Azure DevOps Organization URL (e.g., https://dev.azure.com/org)'
+  
+  project:
+    required: true
+    description: 'Azure DevOps Project Name'
+
+runs:
+  using: "composite"
+
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+    
+    - name: Install dependencies
+      run: pip install -r ${{ github.action_path }}/requirements.txt
+      shell: bash
+    
+    - name: Run Script
+      run: |
+        python ${{ github.action_path }}/post_results.py \
+          --token "${{ inputs.azure-token }}" \
+          --org-url "${{ inputs.org-url }}" \
+          --project "${{ inputs.project }}" \
+          --result-json "${{ inputs.test-results-json }}"
+      shell: bash
