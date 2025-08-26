@@ -33,7 +33,7 @@ runs:
           echo "Python3 is already installed"
         fi
 
-    - name: Debug: List repo root
+    - name: Debug List repo root
       shell: bash
       run: |
         echo "Debug: List root folder"
