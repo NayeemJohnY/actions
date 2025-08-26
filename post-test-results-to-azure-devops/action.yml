@@ -33,20 +33,11 @@ runs:
           echo "Python3 is already installed"
         fi
 
-    - name: Debug paths
-      shell: bash
+    - name: Find all action paths
       run: |
-        echo "github.action_path = ${{ github.action_path }}"
-        if [ -d "${{ github.action_path }}" ]; then
-          echo "Directory exists. Listing recursively:"
-          ls -R "${{ github.action_path }}"
-        else
-          echo "github.action_path does NOT exist!"
-          echo "Listing parent of action path:"
-          ls -la "$(dirname "${{ github.action_path }}")"
-          echo "Listing full _actions tree:"
-          ls -R /home/runner/work/_actions/NayeemJohnY/actions/
-        fi
+        echo pwd
+        echo "Searching /home/runner/work/_actions for actual action folders..."
+        find /home/runner/work/_actions -type d
     
     - name: Install dependencies
       run: pip install -r ${{ github.action_path }}/requirements.txt
