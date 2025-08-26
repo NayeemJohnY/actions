@@ -34,10 +34,10 @@ runs:
         fi
     
     - name: Install dependencies
-      run: |
-      ls -R ./actions
-      pip install -r ./actions/post-test-results-to-azure-devops/requirements.txt
       shell: bash
+      run: |
+        ls -R ./actions
+        pip install -r ./actions/post-test-results-to-azure-devops/requirements.txt
     
     - name: Run Script
       run: |
