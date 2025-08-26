@@ -36,5 +36,5 @@ runs:
           --token "${{ inputs.azure-token }}" \
           --org-url "${{ inputs.org-url }}" \
           --project "${{ inputs.project }}" \
-          --result-json "${{ inputs.test-results-json }}"
+          --test-result-json "${{ inputs.test-results-json }}"
       shell: bash

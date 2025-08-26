@@ -143,7 +143,7 @@ class AzureDevOpsClient:
 
 def main(args):
     try:
-        with open(args.result_json, "r", encoding="utf-8") as f:
+        with open(args.test_result_json, "r", encoding="utf-8") as f:
             test_results_json = json.load(f)
 
         test_plan_name = test_results_json["testPlanName"]
@@ -192,6 +192,6 @@ if __name__ == "__main__":
     )
     parser.add_argument("--project", required=True, help="Azure DevOps project name")
     parser.add_argument(
-        "--result-json", required=True, help="Path to test results JSON file"
+        "--test-result-json", required=True, help="Path to test results JSON file"
     )
     main(parser.parse_args())
