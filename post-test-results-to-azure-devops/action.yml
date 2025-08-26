@@ -33,27 +33,16 @@ runs:
           echo "Python3 is already installed"
         fi
 
-    - name: Debug List repo root
-      shell: bash
-      run: |
-        echo "Debug: List root folder"
-        ls -la
-        echo "Debug: List nested folder"
-        ls -la ./book-api-rest-assured-test-automation
-        echo "Debug: List actions folder"
-        ls -la ./book-api-rest-assured-test-automation/actions/post-test-results-to-azure-devops || echo "Not found"
-
     - name: Install dependencies
       shell: bash
-      run: |
-        pwd
-        pip install -r ./actions/post-test-results-to-azure-devops/requirements.txt
+      run: pip install -r ${{ github.action_path }}/requirements.txt
     
     - name: Run Script
+      shell: bash
+      if: always()
       run: |
-        python ./actions/post-test-results-to-azure-devops/post_results.py \
+        python ${{ github.action_path }}/post_results.py \
           --token "${{ inputs.azure-token }}" \
           --org-url "${{ inputs.org-url }}" \
           --project "${{ inputs.project }}" \
           --test-result-json "${{ inputs.test-results-json }}"
-      shell: bash
