@@ -33,19 +33,19 @@ runs:
           echo "Python3 is already installed"
         fi
 
-    - name: Find all action paths
-      shell: bash
-      run: |
-          echo "Listing _actions directory contents"
-          ls -R "${GITHUB_WORKSPACE}/../_actions"
+      - name: Checkout Actions Repository
+        uses: actions/checkout@v4
+        with:
+          repository: NayeemJohnY/actions
+          token: ${{ secrets.GITHUB_TOKEN }}
     
     - name: Install dependencies
-      run: pip install -r ${{ github.action_path }}/requirements.txt
+      run: pip install -r actions/post-test-results-to-azure-devops/requirements.txt
       shell: bash
     
     - name: Run Script
       run: |
-        python ${{ github.action_path }}/post_results.py \
+        python actions/post-test-results-to-azure-devops/post_results.py \
           --token "${{ inputs.azure-token }}" \
           --org-url "${{ inputs.org-url }}" \
           --project "${{ inputs.project }}" \
