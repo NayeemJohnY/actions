@@ -34,6 +34,7 @@ runs:
         fi
 
     - name: Find all action paths
+      shell: bash
       run: |
         echo pwd
         echo "Searching /home/runner/work/_actions for actual action folders..."
