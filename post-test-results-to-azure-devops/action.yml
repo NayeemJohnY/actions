@@ -41,7 +41,7 @@ runs:
       shell: bash
       if: always()
       run: |
-        python  $GITHUB_ACTION_PATH/post_results.py \
+        python3 $GITHUB_ACTION_PATH/post_results.py \
           --token "${{ inputs.azure-token }}" \
           --org-url "${{ inputs.org-url }}" \
           --project "${{ inputs.project }}" \
