@@ -33,11 +33,11 @@ runs:
           echo "Python3 is already installed"
         fi
 
-      - name: Checkout Actions Repository
-        uses: actions/checkout@v4
-        with:
-          repository: NayeemJohnY/actions
-          token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Checkout Actions Repository
+      uses: actions/checkout@v4
+      with:
+        repository: NayeemJohnY/actions
+        token: ${{ secrets.GITHUB_TOKEN }}
     
     - name: Install dependencies
       run: pip install -r actions/post-test-results-to-azure-devops/requirements.txt
