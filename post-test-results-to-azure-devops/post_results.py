@@ -78,16 +78,18 @@ class AzureDevOpsClient:
         test_points = ado_response["value"]
         return [value["id"] for value in test_points]
 
-    def create_test_run(self, test_plan_name, test_suite_name, test_plan_id, test_point_ids):
+    def create_test_run(
+        self, test_plan_name, test_suite_name, test_plan_id, test_point_ids
+    ):
         payload = {
             "name": f"Automation Test Run - {test_suite_name}",
             "plan": {"id": test_plan_id},
             "pointIds": test_point_ids,
             "automated": True,
-            "comment": f"Automation Test Run Execution:\n" + 
-            f"- TestPlanName : {test_plan_name}\n" +   
-            f"- TestSuiteName : {test_suite_name}\n"  + 
-            f"- Timestamp : {datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}"
+            "comment": f"Automation Test Run Execution:\n"
+            + f"- TestPlanName : {test_plan_name}\n"
+            + f"- TestSuiteName : {test_suite_name}\n"
+            + f"- Timestamp : {datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}",
         }
         response = self.session.post(self.build_url(RUN_URI), json=payload)
         response.raise_for_status()
@@ -103,8 +105,16 @@ class AzureDevOpsClient:
         ado_response = response.json()
         test_points_results = ado_response["value"]
         for point_result in test_points_results:
-            result = test_results.get(point_result["testCase"]["id"], {"outcome": "NotExecuted"})
-            result.update({"id": point_result["id"], "state": "Completed", "priority": result.get("priority", 2)})
+            result = test_results.get(
+                point_result["testCase"]["id"], {"outcome": "NotExecuted"}
+            )
+            result.update(
+                {
+                    "id": point_result["id"],
+                    "state": "Completed",
+                    "priority": result.get("priority", 2),
+                }
+            )
             if result["outcome"] != "Passed":
                 result["failureType"] = result.get("failureType", "New Issue")
                 self.is_failure = True
@@ -154,7 +164,9 @@ def main(args):
         test_plan_id = ado_client.get_test_plan_id(test_plan_name)
         test_suite_id = ado_client.get_test_suite_id(test_plan_id, test_suite_name)
         test_points = ado_client.get_test_points(test_plan_id, test_suite_id)
-        run_id = ado_client.create_test_run(test_plan_name, test_suite_name, test_plan_id, test_points)
+        run_id = ado_client.create_test_run(
+            test_plan_name, test_suite_name, test_plan_id, test_points
+        )
         test_results_payload = ado_client.process_test_results(run_id, test_results)
         ado_client.post_test_results(run_id, test_results_payload)
         ado_client.complete_test_run(run_id)

@@ -49,6 +49,31 @@ Posts test results to Azure DevOps using a Python script. Useful for integrating
     org-url: ${{ secrets.AZURE_ORG_URL }}
     project: ${{ secrets.AZURE_PROJECT }}
 ```
+### Sample Test Results JSON for Azure DevOps Action
+Below is a sample `test-results-report.json` required for the `post-test-results-to-azure-devops` action:
+```json
+{
+  "testResults": {
+    "22": {
+      "outcome": "Passed",
+      "comment": "Automated Test Name: testShouldRejectBookCreationWithClientProvidedId",
+      "durationInMs": 3246,
+      "errorMessage": "",
+      "iterationDetails": [
+        {
+          "id": 1,
+          "outcome": "Passed",
+          "comment": "Initial Attempt",
+          "durationInMs": 3246,
+          "errorMessage": ""
+        }
+      ]
+    }
+  },
+  "testPlanName": "Automation Test Plan",
+  "testSuiteName": "Book API RestAssured Automation Test Suite"
+}
+```
 
 ## How to Use These Actions
 
