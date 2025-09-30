@@ -14,7 +14,7 @@ inputs:
     description: Optional path to the Javadoc output
     required: false
   
-  test-results-json-path:
+  test-results-json:
     description: Test Results JSON Path
     required: false
 
@@ -44,6 +44,6 @@ runs:
       shell: bash
 
     - name: Copy Test Results JSON
-      if: ${{ inputs.test-results-json-path != '' }}
+      if: ${{ inputs.test-results-json != '' }}
       shell: bash
-      run: cp "${{ inputs.test-results-json-path }}" "${{ inputs.output-dir }}/test-results-report.json"
+      run: cp "${{ inputs.test-results-json }}" "${{ inputs.output-dir }}/test-results-report.json"

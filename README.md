@@ -13,6 +13,8 @@ Generates Allure test reports with history support. Use this action to publish t
   uses: NayeemJohnY/actions/allure-report-with-history@main
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
+    allure-results-dir: test-results/allure-results
+    allure-report-dir: test-results/allure-report
 ```
 
 ### 2. prepare-github-pages
@@ -23,7 +25,9 @@ Prepares files and configuration for deploying to GitHub Pages. Use this before 
 - name: Prepare GitHub Pages
   uses: NayeemJohnY/actions/prepare-github-pages@main
   with:
-    reports-dir: ./allure-results
+    allure-report-dir: test-results/allure-report
+    playwright-report-dir: ./playwright-report # Optional
+    test-results-json: test-results/test-results-report.json # Optional
     javadoc-dir: ./target/site/apidocs  # Optional
     output-dir: github-pages  # Optional, defaults to github-pages
 ```
