@@ -18,7 +18,8 @@ Generates Allure test reports with history support. Use this action to publish t
 ```
 
 ### 2. prepare-github-pages
-Prepares files and configuration for deploying to GitHub Pages. Use this before deploying your site. This action copies Allure reports and optionally Javadoc to the GitHub Pages directory for deployment.
+Prepares files and configuration for deploying to GitHub Pages. Use this before deploying your site. This action copies Allure Report, Playwright Report, Javadocs,
+Test Results JSON to GitHub Pages directory for deployment.
 
 **Usage Example:**
 ```yaml
