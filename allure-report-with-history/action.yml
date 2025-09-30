@@ -2,6 +2,15 @@ name: Generate Allure Report with History
 description: Generate Allure report by keeping history of previous runs
 
 inputs:
+
+  allure-results-dir:
+    description: Path to the Allure results directory
+    default: test-results/allure-results
+
+  allure-report-dir:
+    description: Path to the Allure report directory
+    default: test-results/allure-report
+
   github-token:
     description: "GitHub Token for authentication"
     required: true
@@ -31,14 +40,14 @@ runs:
         shell: bash
         continue-on-error: true
         run: |
-          mkdir -p test-results/allure-results/history
+          mkdir -p "${{ inputs.allure-results-dir }}/history"
           for file in history.json history-trend.json categories-trend.json duration-trend.json retry-trend.json; do
             curl -sfL "https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY##*/}/allure-report/history/$file" \
-              -o "test-results/allure-results/history/$file" || echo "$file not found"
+              -o "${{ inputs.allure-results-dir }}/history/$file" || echo "$file not found"
           done
 
       - name: Generate Allure Report
         if: success() || failure()
         shell: bash
         run: |          
-          allure generate test-results/allure-results --clean -o test-results/allure-report
+          allure generate "${{ inputs.allure-results-dir }}" --clean -o "${{ inputs.allure-report-dir }}"
