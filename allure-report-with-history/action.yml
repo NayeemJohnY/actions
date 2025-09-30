@@ -33,7 +33,7 @@ runs:
           curl -o allure-2.27.0.tgz -L https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz
           tar -xzf allure-2.27.0.tgz
           mv allure-2.27.0 /opt/allure
-          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
+          ln -s /opt/allure/bin/allure /usr/bin/allure
 
       - name: Download Allure History
         if: success() || failure()
