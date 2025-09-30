@@ -1,13 +1,21 @@
 name: prepare-github-pages
-description: Copies Allure reports and optionally Javadoc to the GitHub Pages directory for deployment
+description: Copies Allure Report, Playwright Report, Javadocs, Test Results JSON to GitHub Pages directory
 
 inputs:
-  reports-dir:
+  allure-report-dir:
     description: Path to the Allure report directory
     required: true
 
+  playwright-report-dir:
+    description: Path to the Playwright report directory
+    required: false
+
   javadoc-dir:
     description: Optional path to the Javadoc output
+    required: false
+  
+  test-results-json-path:
+    description: Test Results JSON Path
     required: false
 
   output-dir:
@@ -23,7 +31,11 @@ runs:
       shell: bash
 
     - name: Copy Allure report
-      run: cp -r "${{ inputs.reports-dir }}" "${{ inputs.output-dir }}/allure-report"
+      run: cp -r "${{ inputs.allure-report-dir }}" "${{ inputs.output-dir }}/allure-report"
+      shell: bash
+  
+    - name: Copy Playwright report
+      run: cp -r "${{ inputs.playwright-report-dir }}" "${{ inputs.output-dir }}/playwright-report"
       shell: bash
 
     - name: Copy Javadocs
@@ -32,11 +44,6 @@ runs:
       shell: bash
 
     - name: Copy Test Results JSON
+      if: ${{ inputs.test-results-json-path != '' }}
       shell: bash
-      run: |
-        if [ -f test-results/test-results-report.json ]; then
-          echo "File exists. Copying..."
-          cp test-results/test-results-report.json "${{ inputs.output-dir }}/test-results-report.json"
-        else
-          echo "File not found. Skipping..."
-        fi
+      run: cp "${{ inputs.test-results-json-path }}" "${{ inputs.output-dir }}/test-results-report.json"
